@@ -42,6 +42,8 @@ dataset/
 
 ## Download
 
+### Mini-version dataset
+
 ### Train and validation split used in our paper
 
 

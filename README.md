@@ -62,3 +62,7 @@ python3 -m venv dur360bev
 source dur360bev/bin/activate
 pip install -r requirements.txt
 ```
+
+# 3D Model Used in our LiDAR-Camera Setup
+
+

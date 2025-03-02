@@ -40,12 +40,13 @@ dataset/
 │   └── timestamp.txt  
 ```
 
-## Download
+## Download Links
 
 ### Mini-version dataset
 
 ### Train and validation split used in our paper
 
+### 3D model used in our LiDAR-Camera Setup
 
 # Environment Setup  
 
@@ -63,6 +64,5 @@ source dur360bev/bin/activate
 pip install -r requirements.txt
 ```
 
-# 3D Model Used in our LiDAR-Camera Setup
 
 

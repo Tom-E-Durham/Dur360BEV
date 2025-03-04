@@ -1,3 +1,5 @@
+[![arXiv](https://img.shields.io/badge/arXiv-2503.00675-b31b1b.svg)](https://arxiv.org/abs/2503.00675)
+
 # Dur360BEV: A Real-world Single 360-degree Camera Dataset and Benchmark for Bird-Eye View Mapping in Autonomous Driving
 
 ![Image Description](./ICRA_2025_Head_Image.png)

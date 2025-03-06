@@ -4,27 +4,24 @@
 
 ![Image Description](./ICRA_2025_Head_Image.png)
 
-# Abstract  
+## Abstract  
 We present **Dur360BEV**, a novel spherical camera autonomous driving dataset featuring a **128-channel 3D LiDAR** and an **RTK-refined GNSS/INS system**, along with a benchmark for **Bird’s Eye View (BEV) map generation** using a **single spherical camera**. This dataset addresses the challenges of BEV generation by **reducing hardware complexity**, replacing multiple perspective cameras with a **single 360-degree camera**.  
 
 Our benchmark includes **SI2BEV (Spherical-Image-to-BEV)**, a novel module that projects spherical imagery into BEV space with a **refined sampling strategy**, as well as an **adaptive Focal Loss** formulation to handle **extreme class imbalance** in BEV segmentation. Extensive experiments demonstrate that **Dur360BEV** simplifies the sensor setup while achieving **competitive performance**.
 
-# Dataset
+## News
+- [2025/01/27] Dur360BEV has been accepted by ICRA 2025.
 
-## Sensor Setup  
+
+## Sensor placement
 
 Dur360BEV is equipped with a **spherical camera, 3D LiDAR, and a high-precision GNSS/INS system**, providing comprehensive environmental perception.
 
-### **Camera**  
-The dataset uses a **Ricoh Theta S** spherical dual-fisheye camera, featuring a **dual 1/2.3" 12M CMOS sensor**. It captures **RGB images** at a resolution of **1280 × 640** with a **15 Hz capture frequency**. The camera operates with **auto exposure**, and images are stored in **JPEG format** with **factory calibration** applied.
+- **LiDAR**: [Ouster OS1-128 LiDAR sensor](https://ouster.com/products/os1-lidar-sensor/) with 128 channels vertical resolution
+- **Spherical Camera**: [Ricoh Theta S](https://www.ricoh-imaging.co.jp/english/products/theta_s/) featuring a **dual 1/2.3" 12M CMOS sensor**, **1280 × 640** resolution, and **15 Hz capture frequency**
+- **GNSS/INS**: [OxTS RT3000v3](https://www.oxts.com/products/rt3000-v3/) global navigation satellite and inertial navigation system, supporting localization from GPS, GLONASS, BeiDou, Galileo, PPP and SBAS constellations
 
-### **LiDAR**  
-Dur360BEV includes an **Ouster OS1-128** LiDAR sensor with **128 vertical channels** and a **2048 horizontal resolution**. It captures data at **10 Hz** with a **360° horizontal field of view (HFOV)** and a **-21.2° to 21.2° vertical field of view (VFOV)**. The LiDAR achieves a detection range of **120m with >50% probability** and **100m with >90% probability**, with a **range resolution of 0.3 cm**.
-
-### **GNSS/INS**  
-For high-precision localization, the dataset incorporates an **OxTS RT3000v3** GNSS/INS system, operating at **100 Hz**. It provides **0.03° pitch/roll accuracy** and **0.15° slip angle accuracy**, achieving **centimeter-level positioning accuracy** with **RTK corrections received via NTRIP**.
-
-## File Description
+## Dataset File Description
 
 ```
 dataset/ 

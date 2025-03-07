@@ -41,11 +41,11 @@ dataset/
 
 ## Download Links
 
-### Mini-version dataset
-
 ### Train and validation split used in our paper
+[Download from OneDrive](https://durhamuniversity-my.sharepoint.com/:f:/g/personal/hhgb23_durham_ac_uk/Eucqrf1f7GlJuLYVxMqDNSUBDFkJv14P_i-4_S8fQFfeuQ?e=RRemIL)
 
 ### 3D model used in our LiDAR-Camera Setup
+To do...
 
 # Environment Setup  
 

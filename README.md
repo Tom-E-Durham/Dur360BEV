@@ -25,18 +25,24 @@ Dur360BEV is equipped with a **spherical camera, 3D LiDAR, and a high-precision 
 
 ```
 dataset/ 
-├── image/  
-│   ├── data/  
-│   │   └── <frame_number.png>   [ ..... ]   
-│   └── timestamp.txt  
-├── gps/  
-│   └── data.csv  
-├── imu/  
-│   └── data.csv  
-├── ouster_points/  
-│   ├── data/  
-│   │   └── <frame_number.bin>   [ ..... ]   
-│   └── timestamp.txt  
+├── image
+│   ├── data
+│   └── timestamps.txt
+├── labels
+│   ├── data
+│   ├── dataformat.txt
+│   └── timestamps.txt
+├── md5sums.txt
+├── metadata
+│   └── os1.json
+├── ouster_points
+│   ├── data
+│   ├── dataformat.txt
+│   └── timestamps.txt
+└── oxts
+    ├── data
+    ├── dataformat.txt
+    └── timestamps.txt
 ```
 
 ## Download Links

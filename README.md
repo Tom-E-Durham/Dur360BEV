@@ -4,6 +4,10 @@
 
 ![Image Description](./ICRA_2025_Head_Image.png)
 
+
+https://github.com/user-attachments/assets/0b936d87-3c41-474a-a217-2462fa39fba4
+
+
 ## Abstract  
 We present **Dur360BEV**, a novel spherical camera autonomous driving dataset featuring a **128-channel 3D LiDAR** and an **RTK-refined GNSS/INS system**, along with a benchmark for **Bird’s Eye View (BEV) map generation** using a **single spherical camera**. This dataset addresses the challenges of BEV generation by **reducing hardware complexity**, replacing multiple perspective cameras with a **single 360-degree camera**.  
 

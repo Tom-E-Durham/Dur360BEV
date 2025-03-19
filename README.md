@@ -5,7 +5,9 @@
 ![Image Description](./ICRA_2025_Head_Image.png)
 
 
-https://github.com/user-attachments/assets/0b936d87-3c41-474a-a217-2462fa39fba4
+
+https://github.com/user-attachments/assets/5e436f12-50df-485e-9938-7570144f2a29
+
 
 
 ## Abstract  

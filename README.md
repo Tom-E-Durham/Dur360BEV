@@ -61,6 +61,27 @@ dataset/
 ### 3D model used in our LiDAR-Camera Setup
 To do...
 
+## Download Guidance
+### Downloading the full dataset from Hugging Face
+#### Prerequisites
+- Before starting, ensure you have the [**Hugging Face CLI (huggingface_hub)**](https://huggingface.co/docs/huggingface_hub/en/guides/cli) installed:
+
+  ​	Install it via: ```pip install -U "huggingface_hub[cli]"```
+
+- Since the **Dur360BEV dataset** is a [gated (restricted access) dataset](https://huggingface.co/docs/hub/datasets-gated) on Hugging Face, you need to authenticate before downloading it. 
+
+  - You first need a Hugging Face account. If you don’t have one, please register.
+  - Authenticate via the command line **on the computer where you want to download the dataset** by entering: `huggingface-cli login`. Following the instructions of that command, and it will prompt you for your Hugging Face **Access Token**.
+  - Open [this link](https://huggingface.co/datasets/l1997i/DurLAR) and login to your Hugging Face account. At the top of the page, in the section **“You need to agree to share your contact information to access this dataset”**, agree to the conditions and access the dataset content. If you have already agreed and been automatically granted access, the page will display: **“Gated dataset: You have been granted access to this dataset.”**
+
+#### Download the dataset using scripts
+We provide a [pre-written Bash script](dur360bev_hf_download_script.sh) to download the dataset from Hugging Face. You need to manually modify the **User Configuration (Modify as Needed)** section at the beginning of [dur360bev_hf_download_script.sh](dur360bev_hf_download_script.sh) to match your desired paths and features.
+
+If you encounter any issues (e.g., network problems or unexpected interruptions), you can also modify this script to fit your needs. For example, if the extraction process is interrupted, you can manually comment out the dataset download section and resume from extraction.
+
+
+> **Note**: The Hugging Face service may be restricted in certain countries or regions. In such cases, you may consider using a Hugging Face mirror (Hugging Face 镜像) as an alternative.
+
 # Environment Setup  
 
 To ensure reproducibility and ease of installation, we provide a structured virtual environment setup. This includes all required dependencies and the local `fisheye_tools` library.

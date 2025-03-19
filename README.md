@@ -1,3 +1,4 @@
+[![Durham](https://img.shields.io/badge/UK-Durham-blueviolet)](https://durham-repository.worktribe.com/output/3704622)
 [![arXiv](https://img.shields.io/badge/arXiv-2503.00675-b31b1b.svg)](https://arxiv.org/abs/2503.00675)
 
 # Dur360BEV: A Real-world 360-degree Single Camera Dataset and Benchmark for Bird-Eye View Mapping in Autonomous Driving
@@ -51,10 +52,11 @@ dataset/
     └── timestamps.txt
 ```
 
-## Download Links
-
+# Dataset Download
+## Links
 ### Train and validation split used in our paper
-[Download from OneDrive](https://durhamuniversity-my.sharepoint.com/:f:/g/personal/hhgb23_durham_ac_uk/Eucqrf1f7GlJuLYVxMqDNSUBDFkJv14P_i-4_S8fQFfeuQ?e=RRemIL)
+- [Download from Hugging Face](https://huggingface.co/datasets/TomEeee/Dur360BEV)
+- [Download from OneDrive](https://durhamuniversity-my.sharepoint.com/:f:/g/personal/hhgb23_durham_ac_uk/Eucqrf1f7GlJuLYVxMqDNSUBDFkJv14P_i-4_S8fQFfeuQ?e=RRemIL)
 
 ### 3D model used in our LiDAR-Camera Setup
 To do...

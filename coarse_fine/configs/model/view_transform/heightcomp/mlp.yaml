@@ -1,0 +1,7 @@
+classname: src.models.layers.MLP
+mode: mlp
+in_c: ${model.in_c.vt} # Multiplied later by Ycam
+mid_c: ${model.out_c.vt}
+out_c: ${model.out_c.vt}
+num_layers: 4
+as_conv: True

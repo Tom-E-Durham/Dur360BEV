@@ -1,0 +1,38 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - model: coarse_fine.yaml
+  - callbacks: default_pl.yaml
+  - plugins: null
+  - logger: default_pl.yaml
+  - trainer: ddp_pl.yaml
+  - paths: default.yaml
+  - extras: default.yaml
+  - hydra: default.yaml
+  - optional local: default.yaml
+  - debug: null
+
+# task name, determines output directory path
+task_name: "train"
+
+tags: ["dev"]
+train: True
+test: False
+profile: False
+
+# simply provide checkpoint path to resume training
+ckpt:
+  path: null
+  model:
+    freeze: null
+    load: 'all'
+
+# seed for random number generators in pytorch, numpy and python.random
+seed: null
+
+log_every_n_steps: 50 
+
+flags:
+  debug: false
+  val_sparse: false

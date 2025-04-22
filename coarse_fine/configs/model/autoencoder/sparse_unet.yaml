@@ -1,0 +1,6 @@
+_target_: src.models.autoencoder.SparseUNet
+
+in_c: ${model.out_c.vt}
+with_tail_conv: False
+with_large_kernels: False
+with_decoder_bias: False

@@ -1,0 +1,3 @@
+_target_: src.models.heads.BEVConvHead
+shared_out_c: ${model.out_c.autoencoder}
+# Outputs

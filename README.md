@@ -105,7 +105,7 @@ cd Dur360BEV
 ./script/setup_env.sh
 ```
 
-# 📁 Dataset Setup
+# Dataset Setup
 
 After downloading the dataset, follow these steps to place it correctly:
 

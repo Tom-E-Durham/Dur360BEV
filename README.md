@@ -56,7 +56,6 @@ dataset/
 ## Links
 ### Train and validation split used in our paper
 - [Download from Hugging Face](https://huggingface.co/datasets/TomEeee/Dur360BEV)
-- [Download from OneDrive](https://durhamuniversity-my.sharepoint.com/:f:/g/personal/hhgb23_durham_ac_uk/Eucqrf1f7GlJuLYVxMqDNSUBDFkJv14P_i-4_S8fQFfeuQ?e=RRemIL)
 
 ### 3D model used in our LiDAR-Camera Setup
 To do...
@@ -86,17 +85,43 @@ If you encounter any issues (e.g., network problems or unexpected interruptions)
 
 To ensure reproducibility and ease of installation, we provide a structured virtual environment setup. This includes all required dependencies and the local `fisheye_tools` library.
 
+### 🔐 Git LFS Notice
+
+This repository uses Git LFS to manage large files (e.g. model checkpoints).
+
+Please run the following before cloning or pulling:
+
 ```bash
-git clone https://github.com/yourusername/icra2025-dur360bev.git
-cd icra2025-dur360bev
+git lfs install
+```
+
+```bash
+git clone https://github.com/Tom-E-Durham/Dur360BEV.git
+cd Dur360BEV
 ```
 
 ## Virtual Envrionment setup
 ```bash
-python3 -m venv dur360bev
-source dur360bev/bin/activate
-pip install -r requirements.txt
+./script/setup_env.sh
 ```
 
+# 📁 Dataset Setup
+
+After downloading the dataset, follow these steps to place it correctly:
+
+1. **Move the dataset folder** into the project directory:
 
 
+2. **Move the dataset split file** [dataset_indices.pkl](Dur360BEV_dataset/dataset_indices.pkl) into the dataset's `metadata` folder:
+
+This ensures the evaluation scripts can correctly access both the dataset and the split definitions.
+
+# Reproducing the Models
+We provide checkpoints for the two models from our paper.
+## Evaluate our models
+To reproduce the results in our paper, run the following scripts:
+```bash
+./scripts/eval_coarse_fine.sh
+./scripts/eval_dense.sh
+```
+These scripts will load pre-trained weights and perform evaluation on the corresponding test set of our dataset.

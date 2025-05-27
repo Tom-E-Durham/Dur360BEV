@@ -19,7 +19,7 @@ class OSMSemanticMap:
     """
 
     def __init__(self,
-                 bbox=(54.7607, -1.5930, 54.7835, -1.5591)):
+                 bbox=(54.7292, -1.5930, 54.7835, -1.5029)):
 
         # load the data within the bounding box
         query = OSM_Query(bbox)
@@ -438,8 +438,8 @@ class OSMSemanticMapVis:
         # prepare global map's polygons
         if not hasattr(self, 'polygons'):
             _, _ = self.render_map(['driving_area'])
+            self.polygons = self.polygons.buffer(0)
         global_polygons = self.polygons
-
         lon, lat = gps_location
         center_x, center_y = self.LL2XY(lon, lat)
 

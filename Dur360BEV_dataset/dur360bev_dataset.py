@@ -51,7 +51,8 @@ class Dur360BEV(Dataset):
                  transform=None,
                  offset_orient=False,
                  is_train=True,
-                 bev_labels=['Car', 'Pedestrian', 'Lane']):
+                 bev_labels=['Car', 'Pedestrian', 'Lane'],
+                 version='initial'):
         """
         Parameters:
             root_dir (string): Directory with all the data.
@@ -84,7 +85,10 @@ class Dur360BEV(Dataset):
             os.path.join(root_dir, "ouster_points/timestamps.txt"))
         self.gps_timestamps = self._load_timestamps(
             os.path.join(root_dir, "oxts/timestamps.txt"))
-
+        
+        self.filenames = sorted([
+            f[:10] for f in os.listdir(self.img_dir) if f.endswith('.png') and len(f) == 14
+        ])
         # Ensure all timestamps match
         assert len(self.img_timestamps) == len(self.label_timestamps) == len(self.pcd_timestamps) == len(self.gps_timestamps), \
             "Mismatch in dataset timestamps!"
@@ -139,7 +143,8 @@ class Dur360BEV(Dataset):
         Load image data with cv2 and change color to RGB before 
         pre-processing the dual-fisheye image
         """
-        img_path = os.path.join(self.img_dir, f"{str(idx).zfill(10)}.png")
+        # img_path = os.path.join(self.img_dir, f"{str(idx).zfill(10)}.png")
+        img_path = os.path.join(self.img_dir, f"{self.filenames[idx]}.png")
         image = cv2.imread(img_path, cv2.IMREAD_COLOR)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = self.pre_dualfisheye(image)
@@ -164,7 +169,8 @@ class Dur360BEV(Dataset):
         x, y, z, intensity, time, reflectivity, ring, ambient, range
         """
         """Load point cloud data from .bin file."""
-        pcd_path = os.path.join(self.pcd_dir, f"{str(idx).zfill(10)}.bin")
+        # pcd_path = os.path.join(self.pcd_dir, f"{str(idx).zfill(10)}.bin")
+        pcd_path = os.path.join(self.pcd_dir, f"{self.filenames[idx]}.bin")
         # KITTI-style format
         pcd = np.fromfile(pcd_path, dtype=np.float32).reshape(-1, 9)
         return torch.tensor(pcd)
@@ -266,7 +272,8 @@ class Dur360BEV(Dataset):
 
     def get_label(self, idx):
         """Load 3D bounding box annotations from .txt file."""
-        label_path = os.path.join(self.label_dir, f"{str(idx).zfill(10)}.txt")
+        # label_path = os.path.join(self.label_dir, f"{str(idx).zfill(10)}.txt")
+        label_path = os.path.join(self.label_dir, f"{self.filenames[idx]}.txt")
         objects = []
         labels = []
         with open(label_path, 'r') as f:
@@ -292,7 +299,8 @@ class Dur360BEV(Dataset):
 
     def get_gps_imu(self, idx):
         """Load GPS and IMU data from .txt file."""
-        gps_path = os.path.join(self.gps_dir, f"{str(idx).zfill(10)}.txt")
+        # gps_path = os.path.join(self.gps_dir, f"{str(idx).zfill(10)}.txt")
+        gps_path = os.path.join(self.gps_dir, f"{self.filenames[idx]}.txt")
         with open(gps_path, 'r') as f:
             lat, lon, alt, roll, pitch, yaw = map(
                 float, f.readline().strip().split())

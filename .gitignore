@@ -1,2 +1,4 @@
 dur360bev/
 results/
+__pycache__/
+*.pyc

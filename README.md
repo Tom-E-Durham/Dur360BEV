@@ -17,6 +17,7 @@ We present **Dur360BEV**, a novel spherical camera autonomous driving dataset fe
 Our benchmark includes **SI2BEV (Spherical-Image-to-BEV)**, a novel module that projects spherical imagery into BEV space with a **refined sampling strategy**, as well as an **adaptive Focal Loss** formulation to handle **extreme class imbalance** in BEV segmentation. Extensive experiments demonstrate that **Dur360BEV** simplifies the sensor setup while achieving **competitive performance**.
 
 ## News
+- [2025/05/29] Dur360BEV-Extended has been released, providing new driving data and additional frames to complement the original Dur360BEV benchmark.
 - [2025/01/27] Dur360BEV has been accepted by ICRA 2025.
 
 
@@ -24,7 +25,7 @@ Our benchmark includes **SI2BEV (Spherical-Image-to-BEV)**, a novel module that 
 
 Dur360BEV is equipped with a **spherical camera, 3D LiDAR, and a high-precision GNSS/INS system**, providing comprehensive environmental perception.
 
-- **LiDAR**: [Ouster OS1-128 LiDAR sensor](https://ouster.com/products/os1-lidar-sensor/) with 128 channels vertical resolution
+- **LiDAR**: [Ouster OS1-128 LiDAR sensor](https://ouster.com/products/os1-lidar-sensor/) with **128 channels** vertical resolution
 - **Spherical Camera**: [Ricoh Theta S](https://www.ricoh-imaging.co.jp/english/products/theta_s/) featuring a **dual 1/2.3" 12M CMOS sensor**, **1280 × 640** resolution, and **15 Hz capture frequency**
 - **GNSS/INS**: [OxTS RT3000v3](https://www.oxts.com/products/rt3000-v3/) global navigation satellite and inertial navigation system, supporting localization from GPS, GLONASS, BeiDou, Galileo, PPP and SBAS constellations
 
@@ -41,6 +42,7 @@ dataset/
 │   └── timestamps.txt
 ├── md5sums.txt
 ├── metadata
+│   ├── dataset_indices.pkl
 │   └── os1.json
 ├── ouster_points
 │   ├── data
@@ -57,6 +59,9 @@ dataset/
 ### Train and validation split used in our paper
 - [Download from Hugging Face](https://huggingface.co/datasets/TomEeee/Dur360BEV)
 
+### Dur360BEV_Extended
+- [Download from Hugging Face](https://huggingface.co/datasets/TomEeee/Dur360BEV-Extended)
+
 ### 3D model used in our LiDAR-Camera Setup
 To do...
 
@@ -67,14 +72,24 @@ To do...
 
   ​	Install it via: ```pip install -U "huggingface_hub[cli]"```
 
-- Since the **Dur360BEV dataset** is a [gated (restricted access) dataset](https://huggingface.co/docs/hub/datasets-gated) on Hugging Face, you need to authenticate before downloading it. 
-
-  - You first need a Hugging Face account. If you don’t have one, please register.
-  - Authenticate via the command line **on the computer where you want to download the dataset** by entering: `huggingface-cli login`. Following the instructions of that command, and it will prompt you for your Hugging Face **Access Token**.
-  - Open [this link](https://huggingface.co/datasets/l1997i/DurLAR) and login to your Hugging Face account. At the top of the page, in the section **“You need to agree to share your contact information to access this dataset”**, agree to the conditions and access the dataset content. If you have already agreed and been automatically granted access, the page will display: **“Gated dataset: You have been granted access to this dataset.”**
-
 #### Download the dataset using scripts
 We provide a [pre-written Bash script](dur360bev_hf_download_script.sh) to download the dataset from Hugging Face. You need to manually modify the **User Configuration (Modify as Needed)** section at the beginning of [dur360bev_hf_download_script.sh](dur360bev_hf_download_script.sh) to match your desired paths and features.
+
+- Dur360BEV dataset
+  
+    ```bash dur360bev_hf_download_script.sh```
+
+- Dur360BEV_Extended dataset only
+  
+    ```bash dur360bev_hf_download_script.sh extended```
+
+- Dur360BEV_Complete dataset
+  
+    ```bash dur360bev_hf_download_script.sh complete```
+
+    Then run [merge_dataset.py](merge_dataset.py) to combine **Dur360BEV_Extended** and **Dur360BEV** into a unified **Dur360BEV_Complete** dataset:
+
+    ```python3 merge_datasets.py --folder_dir /path/to/Dur360BEV_datasets```
 
 If you encounter any issues (e.g., network problems or unexpected interruptions), you can also modify this script to fit your needs. For example, if the extraction process is interrupted, you can manually comment out the dataset download section and resume from extraction.
 

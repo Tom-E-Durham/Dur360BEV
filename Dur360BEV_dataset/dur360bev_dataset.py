@@ -85,10 +85,22 @@ class Dur360BEV(Dataset):
             os.path.join(root_dir, "ouster_points/timestamps.txt"))
         self.gps_timestamps = self._load_timestamps(
             os.path.join(root_dir, "oxts/timestamps.txt"))
-        
-        self.filenames = sorted([
-            f[:10] for f in os.listdir(self.img_dir) if f.endswith('.png') and len(f) == 14
-        ])
+        # Check that version is valid
+        valid_versions = ['initial', 'extended', 'complete']
+        assert version in valid_versions, f"Invalid version: {version}. Must be one of {valid_versions}"
+        # Select filenames based on version
+        if version == 'initial':
+            self.filenames = sorted([
+                f[:10] for f in os.listdir(self.img_dir) if f.endswith('.png') and len(f) == 14 and f.startswith('0000')
+            ])
+        elif version == 'extended':
+            self.filenames = sorted([
+                f[:10] for f in os.listdir(self.img_dir) if f.endswith('.png') and len(f) == 14 and f.startswith('1000')
+            ])
+        else:  # version == 'complete' or any other
+            self.filenames = sorted([
+                f[:10] for f in os.listdir(self.img_dir) if f.endswith('.png') and len(f) == 14
+            ])
         # Ensure all timestamps match
         assert len(self.img_timestamps) == len(self.label_timestamps) == len(self.pcd_timestamps) == len(self.gps_timestamps), \
             "Mismatch in dataset timestamps!"
@@ -664,46 +676,46 @@ class Dur360BEV(Dataset):
 
 
 #########################################################
-def compile_data(root_dir, batch_size, num_workers, img_type='dual_fisheye', map_r=100, map_scale=2, do_shuffle=True, is_train=True, random_split=False):
+def compile_data(root_dir, 
+                 batch_size, 
+                 num_workers, 
+                 img_type='dual_fisheye', 
+                 map_r=100, 
+                 map_scale=2, 
+                 do_shuffle=True, 
+                 is_train=True, 
+                 dataset_version='initial',):
     if os.path.exists(root_dir):
         totorch_img = transforms.Compose((
             transforms.ToTensor(),
         ))
+        valid_versions = ['initial', 'extended', 'complete']
+        assert dataset_version in valid_versions, f"Invalid dataset_version: {dataset_version}. Must be one of {valid_versions}"
         dataset = Dur360BEV(root_dir,
                             img_type=img_type,
                             map_r=map_r,
                             map_scale=map_scale,
                             transform=totorch_img,
                             is_train=is_train,
-                            bev_labels=['Car'])
+                            bev_labels=['Car'],
+                            version=dataset_version)
         # Split the dataset
-        if random_split:
-            pkl_path = os.path.join(root_dir, 'dataset_indices_random.pkl')
-            with open(pkl_path, 'rb') as f:
-                indices = pickle.load(f)
-                train_indices = indices['train_indices']
-                validation_indices = indices['val_indices']
-                test_indices = indices['test_indices']
-            train_dataset = Subset(dataset, train_indices)
-            val_dataset = Subset(dataset, validation_indices)
-            test_dataset = Subset(dataset, test_indices)
-
-            # Print the lengths of each dataset
-            print(f"Training dataset length: {len(train_dataset)}")
-            print(f"Validation dataset length: {len(val_dataset)}")
-            print(f"Test dataset length: {len(test_dataset)}")
-        else:
+        if dataset_version == 'initial':
             pkl_path = os.path.join(root_dir, 'metadata/dataset_indices.pkl')
-            with open(pkl_path, 'rb') as f:
-                indices = pickle.load(f)
-                train_indices = indices['train_indices']
-                test_indices = indices['test_indices']
-            train_dataset = Subset(dataset, train_indices)
-            test_dataset = Subset(dataset, test_indices)
+        elif dataset_version == 'extended':
+            pkl_path = os.path.join(root_dir, 'metadata/dataset_ext_indices.pkl')
+        else:
+            pkl_path = os.path.join(root_dir, 'metadata/dataset_comp_indices.pkl')
+        with open(pkl_path, 'rb') as f:
+            indices = pickle.load(f)
+            train_indices = indices['train_indices']
+            test_indices = indices['test_indices']
+        train_dataset = Subset(dataset, train_indices)
+        test_dataset = Subset(dataset, test_indices)
 
-            # Print the lengths of each dataset
-            print(f"Training dataset length: {len(train_dataset)}")
-            print(f"Test dataset length: {len(test_dataset)}")
+        # Print the lengths of each dataset
+        print(f"Training dataset length: {len(train_dataset)}")
+        print(f"Test dataset length: {len(test_dataset)}")
 
         train_loader = torch.utils.data.DataLoader(train_dataset,
                                                    batch_size=batch_size,
@@ -713,49 +725,34 @@ def compile_data(root_dir, batch_size, num_workers, img_type='dual_fisheye', map
                                                   batch_size=batch_size,
                                                   shuffle=do_shuffle,
                                                   num_workers=num_workers)
-        if random_split:
-            val_loader = torch.utils.data.DataLoader(val_dataset,
-                                                     batch_size=batch_size,
-                                                     shuffle=do_shuffle,
-                                                     num_workers=num_workers)
-
-            return train_loader, val_loader, test_loader
-        else:
-            return train_loader, test_loader
+        return train_loader, test_loader
     else:
         print('Compile dataloader failed: path not found')
 
 
-def prepare_dataset(root_dir, is_train=True, random_split=False):
+def prepare_dataset(root_dir, is_train=True, dataset_version='initial'):
     totorch_img = transforms.Compose((
         transforms.ToTensor(),
     ))
-    dataset = Dur360BEV(root_dir, transform=totorch_img, is_train=is_train)
+    dataset = Dur360BEV(root_dir, 
+                        transform=totorch_img, 
+                        is_train=is_train, 
+                        version=dataset_version)
     # Split the dataset
-    if random_split:
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dur360_utils/dataset_indices.pkl'), 'rb') as f:
-            indices = pickle.load(f)
-            train_indices = indices['train_indices']
-            val_indices = indices['val_indices']
-            test_indices = indices['test_indices']
-        train_dataset = Subset(dataset, train_indices)
-        val_dataset = Subset(dataset, val_indices)
-        test_dataset = Subset(dataset, test_indices)
-
-        # Print the lengths of each dataset
-        print(f"Training dataset length: {len(train_dataset)}")
-        print(f"Validation dataset length: {len(val_dataset)}")
-        print(f"Test dataset length: {len(test_dataset)}")
-        return train_dataset, val_dataset, test_dataset
+    if dataset_version == 'initial':
+        pkl_path = os.path.join(root_dir, 'metadata/dataset_indices.pkl')
+    elif dataset_version == 'extended':
+        pkl_path = os.path.join(root_dir, 'metadata/dataset_ext_indices.pkl')
     else:
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dur360_utils/dataset_indices.pkl'), 'rb') as f:
-            indices = pickle.load(f)
-            train_indices = indices['train_indices']
-            test_indices = indices['test_indices']
-        train_dataset = Subset(dataset, train_indices)
-        test_dataset = Subset(dataset, test_indices)
+        pkl_path = os.path.join(root_dir, 'metadata/dataset_comp_indices.pkl')
+    with open(pkl_path, 'rb') as f:
+        indices = pickle.load(f)
+        train_indices = indices['train_indices']
+        test_indices = indices['test_indices']
+    train_dataset = Subset(dataset, train_indices)
+    test_dataset = Subset(dataset, test_indices)
 
-        # Print the lengths of each dataset
-        print(f"Training dataset length: {len(train_dataset)}")
-        print(f"Test dataset length: {len(test_dataset)}")
-        return train_dataset, test_dataset
+    # Print the lengths of each dataset
+    print(f"Training dataset length: {len(train_dataset)}")
+    print(f"Test dataset length: {len(test_dataset)}")
+    return train_dataset, test_dataset

@@ -75,7 +75,7 @@ To do...
 #### Download the dataset using scripts
 We provide a [pre-written Bash script](dur360bev_hf_download_script.sh) to download the dataset from Hugging Face. You need to manually modify the **User Configuration (Modify as Needed)** section at the beginning of [dur360bev_hf_download_script.sh](dur360bev_hf_download_script.sh) to match your desired paths and features.
 
-- Dur360BEV dataset
+- Dur360BEV dataset (used in our paper)
   
     ```bash dur360bev_hf_download_script.sh```
 
@@ -87,7 +87,7 @@ We provide a [pre-written Bash script](dur360bev_hf_download_script.sh) to downl
   
     ```bash dur360bev_hf_download_script.sh complete```
 
-    Then run [merge_dataset.py](merge_dataset.py) to combine **Dur360BEV_Extended** and **Dur360BEV** into a unified **Dur360BEV_Complete** dataset:
+    Then run [merge_datasets.py](merge_datasets.py) to combine **Dur360BEV_Extended** and **Dur360BEV** into a unified **Dur360BEV_Complete** dataset:
 
     ```python3 merge_datasets.py --folder_dir /path/to/Dur360BEV_datasets```
 

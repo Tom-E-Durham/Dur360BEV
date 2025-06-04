@@ -117,7 +117,7 @@ cd Dur360BEV
 
 ## Virtual Envrionment setup
 ```bash
-./script/setup_env.sh
+./scripts/setup_env.sh
 ```
 
 # Dataset Setup

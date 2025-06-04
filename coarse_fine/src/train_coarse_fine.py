@@ -6,20 +6,19 @@ Version: 1.0
 """
 
 from tensorboardX import SummaryWriter
+import sys
+import pyrootutils
+pyrootutils.setup_root(__file__, indicator=".project-root", pythonpath=True)
+sys.path.append('..')
 from src import utils
 from Dur360BEV_dataset import dur360bev_dataset
-import sys
 import time
 import numpy as np
 import os
 from fire import Fire
 import hydra
-import pyrootutils
 import torch
 from pytorch_lightning import LightningModule
-
-pyrootutils.setup_root(__file__, indicator=".project-root", pythonpath=True)
-sys.path.append('..')
 
 
 # Set up checkpoint saver:
